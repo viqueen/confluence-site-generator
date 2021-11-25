@@ -1,1 +1,3 @@
-console.log('✅ Node Project : Done');
+export const project = (name: string) => {
+    return `node-project: ${name}`;
+}
