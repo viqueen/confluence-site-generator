@@ -2,7 +2,6 @@
   "name": "node-project",
   "version": "1.0.0",
   "description": "node project",
-  "main": "index.js",
   "scripts": {
     "build": "tsc --watch",
     "test": "jest --watchAll --collect-coverage",
@@ -11,6 +10,11 @@
     "format:check": "prettier --check .",
     "format": "prettier --check --write ."
   },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/viqueen/node-project.git"
