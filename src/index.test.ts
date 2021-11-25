@@ -1,4 +1,4 @@
-import {project} from "./index";
+import { project } from './index';
 
 test('prefixes project name with `node-project:`', () => {
     const name = 'viqueen';
