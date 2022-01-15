@@ -15,5 +15,13 @@ module.exports = {
                 trailingComma: 'none',
             },
         },
+        {
+            files: '*.tsx',
+            options: {
+                tabWidth: 4,
+                singleQuote: true,
+                trailingComma: 'none',
+            },
+        },
     ],
 };

@@ -4,8 +4,10 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { filter } from '@atlaskit/adf-utils';
+import ReactDOMServer from 'react-dom/server';
 import { rewriteUrl, titleToPath } from './confluence/util';
 import { scrubContent } from './confluence/adf-processor';
+import { StaticWrapper } from './wrapper';
 
 const extractObjects = async (
     content: Content,
@@ -85,6 +87,23 @@ const saveContent = async (
     fs.writeFileSync(
         path.resolve(contentPath, 'data.json'),
         JSON.stringify(data)
+    );
+
+    const indexHtml = ReactDOMServer.renderToStaticMarkup(
+        StaticWrapper(content)
+    );
+    const subPath = content.type === 'page' ? 'notes' : 'articles';
+    const templatePath = content.asHomepage
+        ? outputDirectories.templates
+        : path.resolve(
+              outputDirectories.templates,
+              subPath,
+              titleToPath(content.identifier.title)
+          );
+    fs.mkdirSync(templatePath, { recursive: true });
+    fs.writeFileSync(
+        path.resolve(templatePath, 'index.html'),
+        `<!DOCTYPE html>\n${indexHtml}`
     );
 };
 
