@@ -7,6 +7,7 @@
     "extract:data": "ts-node ./src/generator/extract.ts",
     "site:watch": "webpack serve",
     "site:generate": "webpack --config webpack.config.js",
+    "site:firebase:serve": "firebase serve --port 9000",
     "format:check": "prettier --check .",
     "format": "prettier --check --write .",
     "check-updates": "npm-check-updates -u"
