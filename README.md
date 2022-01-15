@@ -1,24 +1,22 @@
-## node-project
+## confluence-site-generator
 
 ### environment
 
 - [NodeJS](https://nodejs.org/en/)
 - optional: [nvm](https://github.com/nvm-sh/nvm)
 
-### build it, test it, and format it
+---
 
-#### locally
+### configure it
+
+### run it
+
+---
+
+### develop it
+
+- setup git hooks
 
 ```bash
-npm run build
-npm test
-npm run format
-```
-
-#### on a build agent
-
-```bash
-npm run ci:build
-npm run ci:test
-npm run format:check
+npx husky install
 ```
