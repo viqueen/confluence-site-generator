@@ -29,6 +29,7 @@
   "homepage": "https://github.com/viqueen/node-project#readme",
   "devDependencies": {
     "@types/node": "^17.0.5",
+    "dotenv": "^12.0.3",
     "husky": "^7.0.4",
     "npm-check-updates": "^12.0.5",
     "prettier": "^2.5.1",
