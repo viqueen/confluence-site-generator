@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import extractPageTree from './extract-page-tree';
 import extractBlogs from './extract-blogs';
+import extractContent from './extract-content';
 
 export interface OutputDirectories {
     notes: string;

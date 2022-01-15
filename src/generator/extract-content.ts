@@ -1,11 +1,9 @@
 import api, { Content } from './confluence/api';
 import { OutputDirectories } from './extract';
-import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { filter } from '@atlaskit/adf-utils';
 import ReactDOMServer from 'react-dom/server';
-import { rewriteUrl, titleToPath } from './confluence/util';
+import { titleToPath } from './confluence/util';
 import { scrubContent } from './confluence/adf-processor';
 import { StaticWrapper } from './wrapper';
 import extractObjects from './extract-objects';
@@ -21,12 +19,18 @@ const extractAttachments = async (
                 .getAttachmentData(attachment.downloadUrl)
                 .then(({ stream }) => {
                     const ext = attachment.mediaType.split('/')[1];
-                    const file = fs.createWriteStream(
-                        path.resolve(
-                            outputDirectories.attachments,
-                            `${attachment.fileId}.${ext}`
-                        )
+                    const filePath = path.resolve(
+                        outputDirectories.attachments,
+                        `${attachment.fileId}.${ext}`
                     );
+                    const file = fs.createWriteStream(filePath);
+                    const symlink = path.resolve(
+                        outputDirectories.attachments,
+                        attachment.fileId
+                    );
+                    if (!fs.existsSync(symlink)) {
+                        fs.symlinkSync(filePath, symlink);
+                    }
                     return stream.pipe(file);
                 });
         })
