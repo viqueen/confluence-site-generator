@@ -66,6 +66,23 @@ const resolveContentPath = (
     );
 };
 
+const symlinkForInternals = (
+    content: Content,
+    outputDirectories: OutputDirectories
+) => {
+    if (content.asHomepage) return;
+    const directory =
+        content.type === 'page'
+            ? outputDirectories.notes
+            : outputDirectories.articles;
+    const symlink = path.resolve(directory, content.identifier.id);
+    if (fs.existsSync(symlink)) return;
+    fs.symlinkSync(
+        path.resolve(directory, titleToPath(content.identifier.title)),
+        symlink
+    );
+};
+
 const saveContent = async (
     content: Content,
     outputDirectories: OutputDirectories
@@ -82,7 +99,7 @@ const saveContent = async (
         path.resolve(contentPath, 'data.json'),
         JSON.stringify(data)
     );
-
+    symlinkForInternals(content, outputDirectories);
     const indexHtml = ReactDOMServer.renderToStaticMarkup(
         StaticWrapper(content)
     );
