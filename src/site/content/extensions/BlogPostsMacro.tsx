@@ -28,7 +28,10 @@ const BlogPostSummary = (props: { content: Content }) => {
             <a href={`/articles/${titleToPath(content.identifier.title)}`}>
                 <Heading level="h800">{content.identifier.title}</Heading>
             </a>
-            <Avatar appearance="circle" src="" />
+            <Avatar
+                appearance="circle"
+                src={`/assets/avatars/${content.author.id}-avatar`}
+            />
             <div
                 style={{
                     color: colorPalette('24')[16].background,
