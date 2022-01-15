@@ -5,7 +5,7 @@ import fs from 'fs';
 import extractPageTree from './extract-page-tree';
 
 export interface OutputDirectories {
-    pages: string;
+    notes: string;
     attachments: string;
     objectResolver: string;
     templates: string;
@@ -16,7 +16,7 @@ const targetOutput = path.resolve(__dirname, '../../dist');
 const siteOutput = path.resolve(targetOutput, 'site');
 const outputDirectories: OutputDirectories = {
     home: siteOutput,
-    pages: path.resolve(siteOutput, 'pages'),
+    notes: path.resolve(siteOutput, 'notes'),
     attachments: path.resolve(siteOutput, 'attachments'),
     objectResolver: path.resolve(siteOutput, 'object-resolver'),
     templates: path.resolve(targetOutput, 'templates')

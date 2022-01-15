@@ -4,7 +4,8 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { filter } from '@atlaskit/adf-utils';
-import { rewriteUrl } from './confluence/util';
+import { rewriteUrl, titleToPath } from './confluence/util';
+import { scrubContent } from './confluence/adf-processor';
 
 const extractObjects = async (
     content: Content,
@@ -64,12 +65,36 @@ const extractAttachments = async (
     );
 };
 
+const saveContent = async (
+    content: Content,
+    outputDirectories: OutputDirectories
+) => {
+    const scrubbed = scrubContent(content.adfBody);
+    const data: Content = {
+        ...content,
+        adfBody: scrubbed,
+        attachments: []
+    };
+    const contentPath = content.asHomepage
+        ? outputDirectories.home
+        : path.resolve(
+              outputDirectories.notes,
+              titleToPath(content.identifier.title)
+          );
+    fs.mkdirSync(contentPath, { recursive: true });
+    fs.writeFileSync(
+        path.resolve(contentPath, 'data.json'),
+        JSON.stringify(data)
+    );
+};
+
 const extractContent = async (
     content: Content,
     outputDirectories: OutputDirectories
 ) => {
     await extractObjects(content, outputDirectories);
     await extractAttachments(content, outputDirectories);
+    await saveContent(content, outputDirectories);
 };
 
 export default extractContent;

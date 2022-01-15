@@ -24,4 +24,8 @@ const rewriteUrl = (url: string): string => {
     return url;
 };
 
-export { rewriteUrl };
+const titleToPath = (title: string): string => {
+    return title.replace(/\s+/g, '-');
+};
+
+export { rewriteUrl, titleToPath };
