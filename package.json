@@ -4,7 +4,7 @@
   "description": "confluence site generator",
   "scripts": {
     "extract:data:watch": "nodemon --config nodemon-generator.json",
-    "extract:data": "ts-node ./src/generator/index.ts",
+    "extract:data": "ts-node ./src/generator/extract.ts",
     "site:watch": "webpack serve",
     "site:generate": "webpack --config webpack.config.js",
     "format:check": "prettier --check .",

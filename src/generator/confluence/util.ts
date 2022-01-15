@@ -15,11 +15,11 @@ const rewriteUrl = (url: string): string => {
     }
     const isBlog = url.match(blogUrl);
     if (isBlog) {
-        return `${environment.TARGET_SITE}/articles/${isBlog.groups?.id}`;
+        return `${environment.TARGET_SITE}/articles/${isBlog.groups?.id}/`;
     }
     const isPage = url.match(pageUrl);
     if (isPage) {
-        return `${environment.TARGET_SITE}/notes/${isPage.groups?.id}`;
+        return `${environment.TARGET_SITE}/notes/${isPage.groups?.id}/`;
     }
     return url;
 };
