@@ -6,6 +6,16 @@ export interface Identifier {
     title: string;
 }
 
+export interface Attachment {
+    fileId: string;
+    downloadUrl: string;
+    mediaType: string;
+}
+
+export interface AttachmentData {
+    stream: any;
+}
+
 export interface Content {
     identifier: Identifier;
     type: 'page' | 'blogpost';
@@ -14,6 +24,7 @@ export interface Content {
     createdDate: number;
     children: Array<Identifier>;
     ancestors: Array<Identifier>;
+    attachments: Array<Attachment>;
     adfBody: any;
     asHomepage: boolean;
 }
@@ -79,6 +90,7 @@ class Api {
                     content;
                 const childPages = children.page?.results || [];
                 const parentPages = ancestors || [];
+                const files = children.attachment?.results || [];
 
                 return {
                     identifier: { id, title },
@@ -92,9 +104,22 @@ class Api {
                     createdDate: new Date(history.createdDate).getTime(),
                     children: childPages.map(identifier),
                     ancestors: parentPages.map(identifier),
-                    adfBody: JSON.parse(body.atlas_doc_format.value)
+                    adfBody: JSON.parse(body.atlas_doc_format.value),
+                    attachments: files.map(({ extensions, _links }: any) => ({
+                        fileId: extensions.fileId,
+                        downloadUrl: _links.download,
+                        mediaType: extensions.mediaType
+                    }))
                 };
             });
+    }
+
+    getAttachmentData(targetUrl: string): Promise<AttachmentData> {
+        return this.client
+            .get(`/wiki/${targetUrl}`, {
+                responseType: 'stream'
+            })
+            .then((response) => ({ stream: response.data }));
     }
 
     getObjects(

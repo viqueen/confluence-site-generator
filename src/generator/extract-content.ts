@@ -7,16 +7,17 @@ import { filter } from '@atlaskit/adf-utils';
 import { rewriteUrl } from './confluence/util';
 
 const extractObjects = async (
-    adf: any,
+    content: Content,
     outputDirectories: OutputDirectories
 ) => {
-    const inlineCards = filter(adf, (node) => node.type === 'inlineCard').map(
-        (item) => {
-            return {
-                resourceUrl: item.attrs?.url
-            };
-        }
-    );
+    const inlineCards = filter(
+        content.adfBody,
+        (node) => node.type === 'inlineCard'
+    ).map((item) => {
+        return {
+            resourceUrl: item.attrs?.url
+        };
+    });
     if (inlineCards.length < 1) return;
 
     const resolvedObjects = await api.getObjects(inlineCards);
@@ -40,11 +41,35 @@ const extractObjects = async (
     });
 };
 
+const extractAttachments = async (
+    content: Content,
+    outputDirectories: OutputDirectories
+) => {
+    const attachments = content.attachments;
+    return Promise.all(
+        attachments.map((attachment) => {
+            return api
+                .getAttachmentData(attachment.downloadUrl)
+                .then(({ stream }) => {
+                    const ext = attachment.mediaType.split('/')[1];
+                    const file = fs.createWriteStream(
+                        path.resolve(
+                            outputDirectories.attachments,
+                            `${attachment.fileId}.${ext}`
+                        )
+                    );
+                    return stream.pipe(file);
+                });
+        })
+    );
+};
+
 const extractContent = async (
     content: Content,
     outputDirectories: OutputDirectories
 ) => {
-    await extractObjects(content.adfBody, outputDirectories);
+    await extractObjects(content, outputDirectories);
+    await extractAttachments(content, outputDirectories);
 };
 
 export default extractContent;
