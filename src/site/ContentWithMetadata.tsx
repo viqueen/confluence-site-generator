@@ -62,7 +62,7 @@ const Byline = (props: BylineProps) => {
             <div style={{ float: 'left', marginRight: 10 }}>
                 <Avatar
                     appearance="square"
-                    src={''}
+                    src={`/assets/avatars/${props.user}-avatar`}
                     size="large"
                     name={props.displayName}
                     presence="online"

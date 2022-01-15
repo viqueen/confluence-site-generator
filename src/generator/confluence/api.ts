@@ -20,7 +20,7 @@ export interface Content {
     identifier: Identifier;
     type: 'page' | 'blogpost';
     excerpt: string;
-    author: Identifier;
+    author: Identifier & { avatar: string };
     createdDate: number;
     children: Array<Identifier>;
     ancestors: Array<Identifier>;
@@ -125,7 +125,8 @@ class Api {
                     excerpt,
                     author: {
                         id: history.createdBy.publicName,
-                        title: history.createdBy.displayName
+                        title: history.createdBy.displayName,
+                        avatar: history.createdBy.profilePicture.path
                     },
                     createdDate: new Date(history.createdDate).getTime(),
                     children: childPages.map(identifier),
@@ -140,9 +141,12 @@ class Api {
             });
     }
 
-    getAttachmentData(targetUrl: string): Promise<AttachmentData> {
+    getAttachmentData(
+        targetUrl: string,
+        prefix: string = '/wiki'
+    ): Promise<AttachmentData> {
         return this.client
-            .get(`/wiki/${targetUrl}`, {
+            .get(`${prefix}${targetUrl}`, {
                 responseType: 'stream'
             })
             .then((response) => ({ stream: response.data }));

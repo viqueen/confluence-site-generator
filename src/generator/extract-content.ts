@@ -18,23 +18,33 @@ const extractAttachments = async (
             return api
                 .getAttachmentData(attachment.downloadUrl)
                 .then(({ stream }) => {
-                    const ext = attachment.mediaType.split('/')[1];
                     const filePath = path.resolve(
-                        outputDirectories.attachments,
-                        `${attachment.fileId}.${ext}`
-                    );
-                    const file = fs.createWriteStream(filePath);
-                    const symlink = path.resolve(
                         outputDirectories.attachments,
                         attachment.fileId
                     );
-                    if (!fs.existsSync(symlink)) {
-                        fs.symlinkSync(filePath, symlink);
-                    }
+                    const file = fs.createWriteStream(filePath);
                     return stream.pipe(file);
                 });
         })
     );
+};
+
+const extractAssets = async (
+    content: Content,
+    outputDirectories: OutputDirectories
+) => {
+    const { author } = content;
+    const avatarFile = path.resolve(
+        outputDirectories.assets.avatars,
+        `${author.id}-avatar`
+    );
+    if (fs.existsSync(avatarFile)) {
+        return;
+    }
+    return api.getAttachmentData(author.avatar, '').then(({ stream }) => {
+        const file = fs.createWriteStream(avatarFile);
+        return stream.pipe(file);
+    });
 };
 
 const resolveContentPath = (
@@ -98,6 +108,7 @@ const extractContent = async (
     console.info('▶️  extract content', content.identifier);
     await extractObjects(content, outputDirectories);
     await extractAttachments(content, outputDirectories);
+    await extractAssets(content, outputDirectories);
     await saveContent(content, outputDirectories);
 };
 

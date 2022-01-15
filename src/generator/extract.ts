@@ -4,7 +4,6 @@ import path from 'path';
 import fs from 'fs';
 import extractPageTree from './extract-page-tree';
 import extractBlogs from './extract-blogs';
-import extractContent from './extract-content';
 
 export interface OutputDirectories {
     notes: string;
@@ -13,22 +12,27 @@ export interface OutputDirectories {
     objectResolver: string;
     templates: string;
     home: string;
+    assets: { avatars: string };
 }
 
 const targetOutput = path.resolve(__dirname, '../../dist');
 const siteOutput = path.resolve(targetOutput, 'site');
 const outputDirectories: OutputDirectories = {
-    home: siteOutput,
     articles: path.resolve(siteOutput, 'articles'),
-    notes: path.resolve(siteOutput, 'notes'),
+    assets: {
+        avatars: path.resolve(siteOutput, 'assets', 'avatars')
+    },
     attachments: path.resolve(siteOutput, 'attachments'),
+    home: siteOutput,
+    notes: path.resolve(siteOutput, 'notes'),
     objectResolver: path.resolve(siteOutput, 'object-resolver'),
     templates: path.resolve(targetOutput, 'templates')
 };
 
-Object.values(outputDirectories).forEach((directory) =>
-    fs.mkdirSync(directory, { recursive: true })
-);
+Object.values(outputDirectories)
+    .filter((item) => typeof item === 'string')
+    .forEach((directory) => fs.mkdirSync(directory, { recursive: true }));
+fs.mkdirSync(outputDirectories.assets.avatars, { recursive: true });
 
 const extract = async () => {
     console.info(
