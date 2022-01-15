@@ -1,0 +1,13 @@
+.blog-post-item {
+  margin: 20px;
+}
+
+.blog-post-item author-avatar {
+  float: left;
+  margin-right: 10px;
+}
+
+.blog-post-item h1 {
+  color: #0052cc;
+  margin-bottom: 5px;
+}
