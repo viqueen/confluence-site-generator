@@ -1,6 +1,7 @@
 import { fontFamily } from '@atlaskit/theme';
 import React from 'react';
 import { render, hydrate } from 'react-dom';
+import ContentWrapper from './ContentWrapper';
 import Navigation from './Navigation';
 
 const Main = () => {
@@ -15,6 +16,7 @@ const Main = () => {
             }}
         >
             <Navigation />
+            <ContentWrapper />
         </div>
     );
 };
