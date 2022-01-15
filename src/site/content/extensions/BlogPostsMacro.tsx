@@ -24,7 +24,7 @@ const unescapeExcerpt = (excerpt: string) => {
 const BlogPostSummary = (props: { content: Content }) => {
     const { content } = props;
     return (
-        <div key={content.identifier.id} className="blog-post-item">
+        <div className="blog-post-item">
             <a href={`/articles/${titleToPath(content.identifier.title)}`}>
                 <Heading level="h800">{content.identifier.title}</Heading>
             </a>
@@ -79,7 +79,12 @@ export default function BlogPostsMacro() {
             {!loading && articles.length > 0 && (
                 <div>
                     {articles.map((item: Content) => {
-                        return <BlogPostSummary content={item} />;
+                        return (
+                            <BlogPostSummary
+                                content={item}
+                                key={item.identifier.id}
+                            />
+                        );
                     })}
                 </div>
             )}
