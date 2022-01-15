@@ -14,11 +14,9 @@
   "files": [
     "dist"
   ],
-  "main": "dist/index",
-  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/viqueen/node-project.git"
+    "url": "git+ssh://git@github.com/viqueen/confluence-site-generator.git"
   },
   "keywords": [
     "confluence",
@@ -28,9 +26,9 @@
   "author": "Hasnae R.",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/viqueen/node-project/issues"
+    "url": "https://github.com/viqueen/confluence-site-generator/issues"
   },
-  "homepage": "https://github.com/viqueen/node-project#readme",
+  "homepage": "https://github.com/viqueen/confluence-site-generator#readme",
   "devDependencies": {
     "@types/node": "^17.0.5",
     "@types/react": "^17.0.38",

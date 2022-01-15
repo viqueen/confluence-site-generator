@@ -19,6 +19,11 @@ define the following environment properties
 
 ### run it
 
+```bash
+npm run extract:data
+npm run site:generate
+```
+
 ---
 
 ### develop it
