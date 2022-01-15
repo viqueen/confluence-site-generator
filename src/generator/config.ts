@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-interface Environment {
+export interface Environment {
     CONFLUENCE_SITE: string;
     CONFLUENCE_USERNAME: string;
     CONFLUENCE_API_TOKEN: string;
