@@ -67,6 +67,25 @@ const extractAttachments = async (
     );
 };
 
+const resolveContentPath = (
+    content: Content,
+    outputDirectories: OutputDirectories
+) => {
+    if (content.asHomepage) {
+        return outputDirectories.home;
+    }
+    if (content.type === 'page') {
+        return path.resolve(
+            outputDirectories.notes,
+            titleToPath(content.identifier.title)
+        );
+    }
+    return path.resolve(
+        outputDirectories.articles,
+        titleToPath(content.identifier.title)
+    );
+};
+
 const saveContent = async (
     content: Content,
     outputDirectories: OutputDirectories
@@ -77,12 +96,7 @@ const saveContent = async (
         adfBody: scrubbed,
         attachments: []
     };
-    const contentPath = content.asHomepage
-        ? outputDirectories.home
-        : path.resolve(
-              outputDirectories.notes,
-              titleToPath(content.identifier.title)
-          );
+    const contentPath = resolveContentPath(content, outputDirectories);
     fs.mkdirSync(contentPath, { recursive: true });
     fs.writeFileSync(
         path.resolve(contentPath, 'data.json'),
@@ -111,6 +125,7 @@ const extractContent = async (
     content: Content,
     outputDirectories: OutputDirectories
 ) => {
+    console.info('▶️  extract content', content.identifier);
     await extractObjects(content, outputDirectories);
     await extractAttachments(content, outputDirectories);
     await saveContent(content, outputDirectories);
