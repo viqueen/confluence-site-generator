@@ -3,6 +3,7 @@ import Spinner from '@atlaskit/spinner';
 import { Content } from '../generator/confluence/api';
 import axios from 'axios';
 import ContentRenderer from './content/ContentRenderer';
+import ContentWithMetadata from './ContentWithMetadata';
 
 export default function ContentWrapper() {
     const [loading, setLoading] = useState(true);
@@ -36,6 +37,9 @@ export default function ContentWrapper() {
                 >
                     <ContentRenderer content={content} />
                 </div>
+            )}
+            {!loading && content && !content.asHomepage && (
+                <ContentWithMetadata content={content} />
             )}
         </>
     );

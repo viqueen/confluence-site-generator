@@ -1,0 +1,27 @@
+.content-ancestors {
+  margin: 40px;
+}
+
+.main-content {
+  overflow-y: auto;
+  height: 90vh;
+  padding-bottom: 60px;
+  width: 100%;
+}
+
+.content-header {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.content-header > span {
+  margin-right: 10px;
+}
+
+.content-header h1 {
+  display: inline-block;
+}
+
+a {
+  text-decoration: none;
+}
