@@ -40,6 +40,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "@atlaskit/adf-utils": "^14.4.0",
     "axios": "^0.24.0"
   }
 }

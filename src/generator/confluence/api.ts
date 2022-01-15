@@ -18,6 +18,17 @@ export interface Content {
     asHomepage: boolean;
 }
 
+export interface ResourceObject {
+    resourceUrl: string;
+}
+
+export interface ResourceDefinition {
+    url: string;
+    generator: { icon: { url: string } };
+    name: string;
+    '@type': string;
+}
+
 const identifier = (item: any): Identifier => ({
     id: item.id,
     title: item.title
@@ -83,6 +94,22 @@ class Api {
                     ancestors: parentPages.map(identifier),
                     adfBody: JSON.parse(body.atlas_doc_format.value)
                 };
+            });
+    }
+
+    getObjects(
+        resourceUrls: Array<ResourceObject>
+    ): Promise<Array<{ body: { data: ResourceDefinition } }>> {
+        return this.client
+            .post('/gateway/api/object-resolver/resolve/batch', resourceUrls, {
+                headers: {
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'same-origin',
+                    cookie: `cloud.session.token=${environment.CONFLUENCE_CLOUD_TOKEN}`
+                }
+            })
+            .then((response) => {
+                return response.data;
             });
     }
 }
