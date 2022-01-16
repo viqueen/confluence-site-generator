@@ -4,14 +4,15 @@ import {
     PrimaryButton
 } from '@atlaskit/atlassian-navigation';
 import React from 'react';
+import { siteProperties } from './properties';
 
 const ConfluenceSiteHome = () => {
     return (
         <CustomProductHome
-            iconAlt="confluence-site-generator"
-            iconUrl=""
-            logoAlt="confluence-site-generator"
-            logoUrl=""
+            iconAlt={siteProperties.title}
+            iconUrl={siteProperties.iconUrl}
+            logoAlt={siteProperties.title}
+            logoUrl={siteProperties.iconUrl}
         />
     );
 };
@@ -20,7 +21,7 @@ const HomeLink = () => {
     return (
         <a href="/" style={{ textDecoration: 'none' }}>
             <PrimaryButton isHighlighted={true}>
-                confluence-site-generator
+                {siteProperties.title}
             </PrimaryButton>
         </a>
     );
@@ -29,7 +30,7 @@ const HomeLink = () => {
 export default function Navigation() {
     return (
         <AtlassianNavigation
-            label="viqueen.org"
+            label={siteProperties.title}
             primaryItems={[<HomeLink />]}
             renderProductHome={ConfluenceSiteHome}
         />

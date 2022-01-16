@@ -16,7 +16,7 @@ const StaticWrapper = (content: Content) => {
                 <meta name="twitter:site" content={environment.TWITTER_SITE} />
                 <meta name="twitter:title" content={content.identifier.title} />
                 <meta name="twitter:description" content={content.excerpt} />
-                <title>/vi | {content.identifier.title}</title>
+                <title>{content.identifier.title}</title>
             </head>
             <body>
                 <div id="root" />

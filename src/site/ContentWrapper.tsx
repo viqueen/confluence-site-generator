@@ -4,6 +4,7 @@ import { Content } from '../generator/confluence/api';
 import axios from 'axios';
 import ContentRenderer from './content/ContentRenderer';
 import ContentWithMetadata from './ContentWithMetadata';
+import { siteProperties } from './properties';
 
 export default function ContentWrapper() {
     const [loading, setLoading] = useState(true);
@@ -13,6 +14,7 @@ export default function ContentWrapper() {
         const fetchData = async () => {
             setLoading(true);
             const { data } = await axios.get('data.json');
+            document.title = `${siteProperties.contentTitlePrefix}${data.identifier.title}`;
             setContent(data);
             setLoading(false);
         };
