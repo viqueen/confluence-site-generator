@@ -118,10 +118,33 @@ const saveContent = async (
     );
 };
 
+const shouldSkip = (
+    content: Content,
+    outputDirectories: OutputDirectories
+): boolean => {
+    const targetDirectory =
+        content.type === 'page'
+            ? outputDirectories.notes
+            : outputDirectories.articles;
+    const dataFile = path.resolve(
+        targetDirectory,
+        titleToPath(content.identifier.title),
+        'data.json'
+    );
+    if (!fs.existsSync(dataFile)) return false;
+    const fileStats = fs.statSync(dataFile);
+    const lastTouched = fileStats.mtime.getTime();
+    return lastTouched >= content.lastModifiedDate;
+};
+
 const extractContent = async (
     content: Content,
     outputDirectories: OutputDirectories
 ) => {
+    if (shouldSkip(content, outputDirectories)) {
+        console.log('⚡️  skipped', content.identifier);
+        return;
+    }
     console.info('▶️  extract content', content.identifier);
     await extractObjects(content, outputDirectories);
     await extractAttachments(content, outputDirectories);

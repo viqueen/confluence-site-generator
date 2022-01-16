@@ -22,6 +22,7 @@ export interface Content {
     excerpt: string;
     author: Identifier & { avatar: string };
     createdDate: number;
+    lastModifiedDate: number;
     children: Array<Identifier>;
     ancestors: Array<Identifier>;
     attachments: Array<Attachment>;
@@ -111,7 +112,7 @@ class Api {
             .then((response) => response.data)
             .then((data) => {
                 const item = data.results[0];
-                const { content, excerpt } = item;
+                const { content, excerpt, lastModified } = item;
                 const { children, ancestors, id, title, history, body, type } =
                     content;
                 const childPages = children.page?.results || [];
@@ -129,6 +130,7 @@ class Api {
                         avatar: history.createdBy.profilePicture.path
                     },
                     createdDate: new Date(history.createdDate).getTime(),
+                    lastModifiedDate: new Date(lastModified).getTime(),
                     children: childPages.map(identifier),
                     ancestors: parentPages.map(identifier),
                     adfBody: JSON.parse(body.atlas_doc_format.value),
