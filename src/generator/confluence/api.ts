@@ -20,7 +20,7 @@ export interface Content {
     identifier: Identifier;
     type: 'page' | 'blogpost';
     excerpt: string;
-    author: Identifier & { avatar: string };
+    author: Identifier & { avatar: string; accountId: string };
     createdDate: number;
     lastModifiedDate: number;
     children: Array<Identifier>;
@@ -126,6 +126,7 @@ class Api {
                     excerpt,
                     author: {
                         id: history.createdBy.publicName,
+                        accountId: history.createdBy.accountId,
                         title: history.createdBy.displayName,
                         avatar: history.createdBy.profilePicture.path
                     },

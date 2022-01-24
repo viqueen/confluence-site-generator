@@ -4,6 +4,7 @@ import { Content } from '../../../generator/confluence/api';
 import ChildrenMacro from './ChildrenMacro';
 import BlogPostsMacro from './BlogPostsMacro';
 import MediaFile from './MediaFile';
+import ProfilePicture from './ProfilePicture';
 
 const extensionHandlers = (content: Content) => {
     return {
@@ -22,10 +23,18 @@ const extensionHandlers = (content: Content) => {
                     );
                 case 'blog-posts':
                     return <BlogPostsMacro />;
+                case 'profile-picture':
+                    return (
+                        <ProfilePicture
+                            accountId={ext.parameters.macroParams.User.value}
+                            size={ext.parameters.macroParams.Size.value}
+                        />
+                    );
                 default:
                     console.log(
                         '** missing extension handler: ',
-                        ext.extensionKey
+                        ext.extensionKey,
+                        ext
                     );
                     return null;
             }

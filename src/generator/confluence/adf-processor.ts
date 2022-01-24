@@ -37,6 +37,7 @@ const scrubContent = (doc: any) => {
             extension: identityProcessor,
             heading: identityProcessor,
             inlineCard: inlineCardProcessor,
+            inlineExtension: identityProcessor,
             media: identityProcessor,
             mediaSingle: mediaSingleProcessor,
             panel: identityProcessor,

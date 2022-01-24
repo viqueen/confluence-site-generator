@@ -41,10 +41,17 @@ const extractAssets = async (
     if (fs.existsSync(avatarFile)) {
         return;
     }
-    return api.getAttachmentData(author.avatar, '').then(({ stream }) => {
+    await api.getAttachmentData(author.avatar, '').then(({ stream }) => {
         const file = fs.createWriteStream(avatarFile);
         return stream.pipe(file);
     });
+
+    const symlink = path.resolve(
+        outputDirectories.assets.avatars,
+        author.accountId
+    );
+    if (fs.existsSync(symlink)) return;
+    fs.symlinkSync(avatarFile, symlink);
 };
 
 const resolveContentPath = (
