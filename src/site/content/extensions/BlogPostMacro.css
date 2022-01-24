@@ -1,5 +1,5 @@
 .blog-post-item {
-  margin: 20px;
+  margin: 30px;
 }
 
 .blog-post-item author-avatar {
@@ -7,7 +7,9 @@
   margin-right: 10px;
 }
 
-.blog-post-item h1 {
+.blog-post-item a {
+  font-size: 24px;
   color: #0052cc;
-  margin-bottom: 5px;
+  display: block;
+  margin-bottom: 10px;
 }

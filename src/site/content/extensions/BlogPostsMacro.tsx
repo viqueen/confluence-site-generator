@@ -26,7 +26,7 @@ const BlogPostSummary = (props: { content: Content }) => {
     return (
         <div className="blog-post-item">
             <a href={`/articles/${titleToPath(content.identifier.title)}`}>
-                <Heading level="h800">{content.identifier.title}</Heading>
+                {content.identifier.title}
             </a>
             <Avatar
                 appearance="circle"
@@ -53,7 +53,7 @@ const BlogPostSummary = (props: { content: Content }) => {
                     />
                 </div>
             </div>
-            <div style={{ marginTop: 10 }}>
+            <div style={{ marginTop: 20 }}>
                 {unescapeExcerpt(content.excerpt)}
             </div>
             <hr />
