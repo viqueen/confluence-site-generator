@@ -8,6 +8,8 @@
     "site:watch": "webpack serve",
     "site:generate": "webpack --config webpack.config.js",
     "site:firebase:serve": "firebase serve --port 9000",
+    "site:firebase:preview": "firebase hosting:channel:deploy",
+    "site:firebase:deploy": "firebase deploy --only hosting",
     "format:check": "prettier --check .",
     "format": "prettier --check --write .",
     "check-updates": "npm-check-updates -u"
