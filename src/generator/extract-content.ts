@@ -90,7 +90,7 @@ const symlinkForInternals = (
     );
 };
 
-const saveContent = async (
+const saveContentData = async (
     content: Content,
     outputDirectories: OutputDirectories
 ) => {
@@ -107,6 +107,12 @@ const saveContent = async (
         JSON.stringify(data)
     );
     symlinkForInternals(content, outputDirectories);
+};
+
+const saveContentHtml = async (
+    content: Content,
+    outputDirectories: OutputDirectories
+) => {
     const indexHtml = ReactDOMServer.renderToStaticMarkup(
         StaticWrapper(content)
     );
@@ -125,7 +131,7 @@ const saveContent = async (
     );
 };
 
-const shouldSkip = (
+const shouldExtractContentData = (
     content: Content,
     outputDirectories: OutputDirectories
 ): boolean => {
@@ -138,25 +144,28 @@ const shouldSkip = (
         titleToPath(content.identifier.title),
         'data.json'
     );
-    if (!fs.existsSync(dataFile)) return false;
+    if (!fs.existsSync(dataFile)) return true;
     const fileStats = fs.statSync(dataFile);
     const lastTouched = fileStats.mtime.getTime();
-    return lastTouched >= content.lastModifiedDate;
+
+    return lastTouched < content.lastModifiedDate;
 };
 
 const extractContent = async (
     content: Content,
     outputDirectories: OutputDirectories
 ) => {
-    if (shouldSkip(content, outputDirectories)) {
-        console.log('⚡️  skipped', content.identifier);
-        return;
+    if (shouldExtractContentData(content, outputDirectories)) {
+        console.info('▶️  extract content', content.identifier);
+        await extractObjects(content, outputDirectories);
+        await extractAttachments(content, outputDirectories);
+        await extractAssets(content, outputDirectories);
+        await saveContentData(content, outputDirectories);
+    } else {
+        console.log('⚡️  skipped data extraction', content.identifier);
     }
-    console.info('▶️  extract content', content.identifier);
-    await extractObjects(content, outputDirectories);
-    await extractAttachments(content, outputDirectories);
-    await extractAssets(content, outputDirectories);
-    await saveContent(content, outputDirectories);
+    // static templates might change, this is not an expensive call anyway
+    await saveContentHtml(content, outputDirectories);
 };
 
 export default extractContent;
