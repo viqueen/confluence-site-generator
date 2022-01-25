@@ -13,7 +13,7 @@ const extractBlogs = async (outputDirectories: OutputDirectories) => {
     );
 
     for (const article of articles) {
-        const content = await api.getContent(article.identifier.id);
+        const content = await api.getContentById(article.identifier);
         await extractContent(content, outputDirectories);
     }
 };

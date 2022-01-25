@@ -58,11 +58,9 @@ class Api {
         });
     }
 
-    getSpaceHomepage(): Promise<Identifier> {
+    getSpaceHomepage(spaceKey: string): Promise<Identifier> {
         return this.client
-            .get(
-                `/wiki/rest/api/space/${environment.CONFLUENCE_SPACE}?expand=homepage`
-            )
+            .get(`/wiki/rest/api/space/${spaceKey}?expand=homepage`)
             .then(({ data }) => ({
                 id: data.homepage.id,
                 title: data.homepage.title
@@ -95,7 +93,14 @@ class Api {
             });
     }
 
-    getContent(contentId: string, asHomepage = false): Promise<Content> {
+    getContentById(
+        contentId: Identifier,
+        asHomepage = false
+    ): Promise<Content> {
+        return this.getContent(`id=${contentId.id}`, asHomepage);
+    }
+
+    getContent(cql: string, asHomepage = false): Promise<Content> {
         const contentExpansions = [
             'content.body.atlas_doc_format',
             'content.children.page',
@@ -104,7 +109,7 @@ class Api {
             'content.history'
         ];
         const query = new URLSearchParams({
-            cql: `id=${contentId}`,
+            cql: cql,
             expand: contentExpansions.join(',')
         });
         return this.client

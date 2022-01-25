@@ -1,9 +1,7 @@
 import { environment } from './config';
-import api from './confluence/api';
 import path from 'path';
 import fs from 'fs';
-import extractPageTree from './extract-page-tree';
-import extractBlogs from './extract-blogs';
+import extractSpace from './extract-space';
 
 export interface OutputDirectories {
     notes: string;
@@ -14,6 +12,8 @@ export interface OutputDirectories {
     home: string;
     assets: { avatars: string };
 }
+
+// setup output directories
 
 const targetOutput = path.resolve(__dirname, '../../dist');
 const siteOutput = path.resolve(targetOutput, 'site');
@@ -34,20 +34,13 @@ Object.values(outputDirectories)
     .forEach((directory) => fs.mkdirSync(directory, { recursive: true }));
 fs.mkdirSync(outputDirectories.assets.avatars, { recursive: true });
 
+// extract content from confluence
+
 const extract = async () => {
-    console.info(
-        `🎬 action : extract confluence ${environment.CONFLUENCE_SPACE} space content`
-    );
-    const homePage = await api.getSpaceHomepage();
-    console.info(`🏠 processing space home: `, homePage);
-    await extractPageTree(homePage.id, outputDirectories, true);
-    await extractBlogs(outputDirectories);
+    const sourceSpace = environment.CONFLUENCE_SPACE;
+    await extractSpace(sourceSpace, outputDirectories);
 };
 
 extract()
-    .then(() => {
-        console.info('✅ done : extract');
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+    .then(() => console.info('✅ done : extract'))
+    .catch((error) => console.error(error));
