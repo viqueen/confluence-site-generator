@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "confluence site generator",
   "scripts": {
+    "build": "tsc --watch",
+    "ci:build": "tsc",
     "extract:data:watch": "nodemon --config nodemon-generator.json",
     "extract:data": "ts-node ./src/generator/extract.ts",
     "site:watch": "webpack serve",
@@ -33,7 +35,7 @@
   },
   "homepage": "https://github.com/viqueen/confluence-site-generator#readme",
   "devDependencies": {
-    "@types/node": "^17.0.5",
+    "@types/node": "^17.0.12",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "css-loader": "^5.2.7",
@@ -67,6 +69,7 @@
     "@atlaskit/spinner": "^15.1.4",
     "@atlaskit/theme": "^12.1.0",
     "axios": "^0.24.0",
+    "commander": "^8.3.0",
     "json-ld-types": "^2.3.3",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

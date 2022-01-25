@@ -2,6 +2,7 @@ import { environment } from './config';
 import path from 'path';
 import fs from 'fs';
 import extractSpace from './extract-space';
+import setupOutputDirectories from './setup-output-directories';
 
 export interface OutputDirectories {
     notes: string;
@@ -16,23 +17,8 @@ export interface OutputDirectories {
 // setup output directories
 
 const targetOutput = path.resolve(__dirname, '../../dist');
-const siteOutput = path.resolve(targetOutput, 'site');
-const outputDirectories: OutputDirectories = {
-    articles: path.resolve(siteOutput, 'articles'),
-    assets: {
-        avatars: path.resolve(siteOutput, 'assets', 'avatars')
-    },
-    attachments: path.resolve(siteOutput, 'attachments'),
-    home: siteOutput,
-    notes: path.resolve(siteOutput, 'notes'),
-    objectResolver: path.resolve(siteOutput, 'object-resolver'),
-    templates: path.resolve(targetOutput, 'templates')
-};
-
-Object.values(outputDirectories)
-    .filter((item) => typeof item === 'string')
-    .forEach((directory) => fs.mkdirSync(directory, { recursive: true }));
-fs.mkdirSync(outputDirectories.assets.avatars, { recursive: true });
+const outputDirectories: OutputDirectories =
+    setupOutputDirectories(targetOutput);
 
 // extract content from confluence
 
