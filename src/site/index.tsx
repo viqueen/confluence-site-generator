@@ -5,7 +5,8 @@ import ContentWrapper from './ContentWrapper';
 import Navigation from './Navigation';
 
 export const titleToPath = (title: string): string => {
-    return title.replace(/\s+/g, '-');
+    const noSpaces = title.replace(/(\s+)/g, '-');
+    return noSpaces.replace(/[,?]/g, '');
 };
 
 const Main = () => {

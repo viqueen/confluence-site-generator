@@ -24,7 +24,7 @@ const BlogPostSummary = (props: { content: Content }) => {
     const { content } = props;
     return (
         <div className="blog-post-item">
-            <a href={`/articles/${titleToPath(content.identifier.title)}`}>
+            <a href={`/articles/${titleToPath(content.identifier.title)}/`}>
                 {content.identifier.title}
             </a>
             <Avatar
