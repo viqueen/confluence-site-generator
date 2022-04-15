@@ -1,11 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const fs = require('fs');
 const { listFiles } = require('fs-directory');
 
 const siteSources = path.join(__dirname, 'src', 'site');
-const siteOutput = path.join(__dirname, 'dist', 'site');
-const templatesDirectory = path.join(__dirname, 'dist', 'templates');
+const siteOutput = path.join(__dirname, 'output', 'site');
+const templatesDirectory = path.join(__dirname, 'output', 'templates');
 
 const indexFiles = listFiles(templatesDirectory, {
     fileFilter: (entry) => entry.name === 'index.html',

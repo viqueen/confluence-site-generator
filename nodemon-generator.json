@@ -1,5 +1,0 @@
-{
-  "watch": ["src/generator"],
-  "ext": "ts",
-  "exec": "ts-node ./src/generator/extract.ts"
-}
