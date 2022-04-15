@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '@atlaskit/spinner';
-import Heading from '@atlaskit/heading';
 import './BlogPostMacro.css';
 import Avatar from '@atlaskit/avatar';
 import { colorPalette } from '@atlaskit/theme/color-palettes';
 import { Date } from '@atlaskit/date';
-import { Content } from '../../../generator/confluence/api';
 import { titleToPath } from '../../index';
+import { Content } from 'confluence-content-extractor/dist/confluence/api';
 
 const unescapeExcerpt = (excerpt: string) => {
     return excerpt.replace(
@@ -68,7 +67,7 @@ export default function BlogPostsMacro() {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const { data: response } = await axios.get(`/articles.json`);
+            const { data: response } = await axios.get(`/blogs.json`);
             setArticles(response);
             setLoading(false);
         };

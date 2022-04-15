@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '@atlaskit/spinner';
-import { Identifier } from '../../../generator/confluence/api';
 import { titleToPath } from '../../index';
+import { Identifier } from 'confluence-content-extractor/dist/confluence/api';
 
 interface ChildrenMacroPops {
     parent?: string;

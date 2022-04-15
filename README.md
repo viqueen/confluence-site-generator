@@ -20,7 +20,7 @@ define the following environment properties
 ### run it
 
 ```bash
-npm run extract:data
+npm run site:extract
 npm run site:generate
 ```
 

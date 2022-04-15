@@ -1,24 +1,21 @@
 import React from 'react';
 import { ExtensionParams } from '@atlaskit/editor-common/dist/types/extensions/types/extension-handler';
-import { Content } from '../../../generator/confluence/api';
 import ChildrenMacro from './ChildrenMacro';
 import BlogPostsMacro from './BlogPostsMacro';
 import MediaFile from './MediaFile';
 import ProfilePicture from './ProfilePicture';
+import { Content } from 'confluence-content-extractor/dist/confluence/api';
 
 const extensionHandlers = (content: Content) => {
     return {
-        'com.atlassian.confluence.macro.core': (
-            ext: ExtensionParams<any>,
-            doc: object
-        ) => {
+        'com.atlassian.confluence.macro.core': (ext: ExtensionParams<any>) => {
             switch (ext.extensionKey) {
                 case 'children':
                     const parent = ext.parameters.macroParams.page?.value;
                     return (
                         <ChildrenMacro
                             parent={parent}
-                            children={content.children}
+                            children={content.children || []}
                         />
                     );
                 case 'blog-posts':
@@ -53,7 +50,7 @@ const extensionHandlers = (content: Content) => {
                     />
                 );
             }
-            console.log('** missing extension handler: ', ext.extensionKey);
+            console.warn('** missing extension handler: ', ext.extensionKey);
             return null;
         }
     };

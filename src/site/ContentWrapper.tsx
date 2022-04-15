@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Spinner from '@atlaskit/spinner';
-import { Content } from '../generator/confluence/api';
 import axios from 'axios';
 import ContentRenderer from './content/ContentRenderer';
 import ContentWithMetadata from './ContentWithMetadata';
 import { siteProperties } from './properties';
+import {Content} from "confluence-content-extractor/dist/confluence/api";
 
 export default function ContentWrapper() {
     const [loading, setLoading] = useState(true);

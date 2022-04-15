@@ -1,6 +1,5 @@
 import Breadcrumbs, { BreadcrumbsItem } from '@atlaskit/breadcrumbs';
 import React from 'react';
-import { Content, Identifier } from '../generator/confluence/api';
 import { titleToPath } from './index';
 
 import './ContentWithMetadata.css';
@@ -12,6 +11,7 @@ import ContentRenderer from './content/ContentRenderer';
 import Avatar from '@atlaskit/avatar';
 import { colorPalette } from '@atlaskit/theme/color-palettes';
 import { Date } from '@atlaskit/date';
+import {Content, Identifier} from "confluence-content-extractor/dist/confluence/api";
 
 interface ContentWithMetadataProps {
     content: Content;
@@ -33,7 +33,7 @@ const Ancestors = ({ content }: ContentWithMetadataProps) => {
     return (
         <div className="content-ancestors">
             <Breadcrumbs>
-                {content.ancestors.map((item: Identifier, index: number) => {
+                {content.ancestors?.map((item: Identifier, index: number) => {
                     return (
                         <BreadcrumbsItem
                             href={

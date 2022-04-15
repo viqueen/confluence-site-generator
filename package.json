@@ -5,8 +5,6 @@
   "scripts": {
     "build": "tsc --watch",
     "ci:build": "tsc",
-    "extract:data:watch": "nodemon --config nodemon-generator.json",
-    "extract:data": "ts-node ./src/generator/extract.ts",
     "site:extract": "confsite extract public",
     "site:watch": "webpack serve",
     "site:generate": "webpack --config webpack.config.js",

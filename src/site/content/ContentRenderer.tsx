@@ -1,10 +1,10 @@
 import React from 'react';
-import { Content } from '../../generator/confluence/api';
 import { Provider } from '@atlaskit/smart-card';
 import { ReactRenderer } from '@atlaskit/renderer';
 import SimpleCardClient from './SimpleCardClient';
 import { extensionHandlers } from './extensions';
 import { IntlProvider } from 'react-intl';
+import { Content } from 'confluence-content-extractor/dist/confluence/api';
 
 interface ContentRendererProps {
     content: Content;
