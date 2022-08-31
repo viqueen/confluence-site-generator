@@ -6,6 +6,7 @@
     "build": "tsc --watch",
     "ci:build": "tsc",
     "site:extract": "confsite extract public",
+    "site:prepare": "ts-node src/prepare/index.ts",
     "site:watch": "webpack serve",
     "site:generate": "webpack --config webpack.config.js",
     "site:firebase:serve": "firebase serve --port 9000",

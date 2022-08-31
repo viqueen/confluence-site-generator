@@ -1,27 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Spinner from '@atlaskit/spinner';
-import axios from 'axios';
 import ContentRenderer from './content/ContentRenderer';
 import ContentWithMetadata from './ContentWithMetadata';
-import { siteProperties } from './properties';
-import {Content} from "confluence-content-extractor/dist/confluence/api";
+import { Content } from 'confluence-content-extractor/dist/confluence/api';
 
-export default function ContentWrapper() {
-    const [loading, setLoading] = useState(true);
-    const [content, setContent] = useState<Content | undefined>(undefined);
+type ContentWrapperProps = {
+    loading: boolean;
+    content: Content | undefined;
+};
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const { data } = await axios.get('data.json');
-            document.title = `${siteProperties.contentTitlePrefix}${data.identifier.title}`;
-            setContent(data);
-            setLoading(false);
-        };
-        // noinspection JSIgnoredPromiseFromCall
-        fetchData();
-    }, []);
-
+export default function ContentWrapper({
+    loading,
+    content
+}: ContentWrapperProps) {
     return (
         <>
             {loading && (
@@ -34,7 +25,7 @@ export default function ContentWrapper() {
                     style={{
                         overflowY: 'auto',
                         height: '90vh',
-                        paddingBottom: 60
+                        padding: '2em'
                     }}
                 >
                     <ContentRenderer content={content} />
