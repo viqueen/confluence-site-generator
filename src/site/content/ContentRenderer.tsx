@@ -5,6 +5,7 @@ import SimpleCardClient from './SimpleCardClient';
 import { extensionHandlers } from './extensions';
 import { IntlProvider } from 'react-intl';
 import { Content } from 'confluence-content-extractor/dist/confluence/api';
+import { dataProviders } from './providers';
 
 interface ContentRendererProps {
     content: Content;
@@ -18,6 +19,7 @@ export default function ContentRenderer({ content }: ContentRendererProps) {
                     document={content.adfBody}
                     allowCopyToClipboard={true}
                     extensionHandlers={extensionHandlers(content)}
+                    dataProviders={dataProviders()}
                 />
             </IntlProvider>
         </Provider>
