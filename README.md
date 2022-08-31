@@ -33,3 +33,10 @@ npm run site:generate
 ```bash
 npx husky install
 ```
+
+- site
+
+```bash
+npm run site:extract
+npm run site:watch
+```

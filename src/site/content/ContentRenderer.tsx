@@ -16,8 +16,7 @@ export default function ContentRenderer({ content }: ContentRendererProps) {
             <IntlProvider locale="en">
                 <ReactRenderer
                     document={content.adfBody}
-                    allowDynamicTextSizing={true}
-                    allowCopyToClipboard={false}
+                    allowCopyToClipboard={true}
                     extensionHandlers={extensionHandlers(content)}
                 />
             </IntlProvider>
